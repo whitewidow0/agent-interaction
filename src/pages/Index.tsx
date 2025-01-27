@@ -89,7 +89,7 @@ const Index = () => {
       <div className={`flex-1 flex flex-col transition-all ${isOpen ? 'ml-80' : 'ml-0'}`}>
         <Header />
         <main className="flex-1 overflow-hidden pt-16 pb-[76px]">
-          <div className="container h-full">
+          <div className="container h-full max-w-4xl mx-auto px-4">
             <div className="flex h-full flex-col overflow-y-auto py-4">
               {messages.map((message) => (
                 <ChatMessage key={message.id} {...message} />
