@@ -3,6 +3,8 @@ import Header from "@/components/Header";
 import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
 import ChatHistory from "@/components/ChatHistory";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ChevronRight } from "lucide-react";
 
 interface Message {
   id: string;
@@ -21,6 +23,7 @@ interface ChatSession {
 const Index = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [chatSessions] = useState<ChatSession[]>([
     {
       id: "1",
@@ -39,7 +42,6 @@ const Index = () => {
 
   const simulateResponse = async (userMessage: string) => {
     setIsLoading(true);
-    // Simulate API delay
     await new Promise((resolve) => setTimeout(resolve, 2000));
     
     const response = `I received your message: "${userMessage}". This is a simulated response.`;
@@ -68,7 +70,6 @@ const Index = () => {
     await simulateResponse(message);
   };
 
-  // Focus input after sending message
   useEffect(() => {
     if (!isLoading && inputRef.current) {
       inputRef.current.focus();
@@ -77,10 +78,15 @@ const Index = () => {
 
   return (
     <div className="flex min-h-screen bg-background text-foreground">
-      <div className="w-80 border-r border-border/40 glass-dark">
-        <ChatHistory sessions={chatSessions} />
-      </div>
-      <div className="flex-1 flex flex-col">
+      <Collapsible open={isOpen} onOpenChange={setIsOpen} className="relative">
+        <CollapsibleTrigger className="absolute right-0 top-8 z-50 h-8 w-8 -mr-4 flex items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md">
+          <ChevronRight className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="w-80 border-r border-border/40 glass-dark">
+          <ChatHistory sessions={chatSessions} />
+        </CollapsibleContent>
+      </Collapsible>
+      <div className={`flex-1 flex flex-col transition-all ${isOpen ? 'ml-80' : 'ml-0'}`}>
         <Header />
         <main className="flex-1 overflow-hidden pt-16 pb-[76px]">
           <div className="container h-full">
@@ -100,7 +106,7 @@ const Index = () => {
             </div>
           </div>
         </main>
-        <div className="fixed bottom-0 left-80 right-0">
+        <div className={`fixed bottom-0 transition-all ${isOpen ? 'left-80' : 'left-0'} right-0`}>
           <ChatInput onSend={handleSend} disabled={isLoading} ref={inputRef} />
         </div>
       </div>
