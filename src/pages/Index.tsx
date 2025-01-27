@@ -77,19 +77,19 @@ const Index = () => {
   }, [isLoading, messages]);
 
   return (
-    <div className="flex min-h-screen bg-background text-foreground">
+    <div className="flex min-h-screen bg-zinc-900">
       <Collapsible open={isOpen} onOpenChange={setIsOpen} className="relative">
-        <CollapsibleTrigger className="absolute right-0 top-8 z-50 h-8 w-8 -mr-4 flex items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md">
+        <CollapsibleTrigger className="absolute right-0 top-8 z-50 h-8 w-8 -mr-4 flex items-center justify-center rounded-full bg-zinc-700 hover:bg-zinc-600 transition-colors shadow-md">
           <ChevronRight className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
         </CollapsibleTrigger>
-        <CollapsibleContent className="w-80 border-r border-border/40 glass-dark">
+        <CollapsibleContent className="w-80 border-r border-zinc-800 bg-zinc-900/95 backdrop-blur-sm">
           <ChatHistory sessions={chatSessions} />
         </CollapsibleContent>
       </Collapsible>
       <div className={`flex-1 flex flex-col transition-all ${isOpen ? 'ml-80' : 'ml-0'}`}>
         <Header />
         <main className="flex-1 overflow-hidden pt-16 pb-[76px]">
-          <div className="container h-full">
+          <div className="container h-full max-w-4xl">
             <div className="flex h-full flex-col overflow-y-auto py-4">
               {messages.map((message) => (
                 <ChatMessage key={message.id} {...message} />

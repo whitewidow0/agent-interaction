@@ -41,13 +41,13 @@ const ChatInput = forwardRef<HTMLTextAreaElement, ChatInputProps>(
     return (
       <form
         onSubmit={handleSubmit}
-        className="glass-dark border-t border-border/40 p-4"
+        className="bg-zinc-900/95 backdrop-blur-sm border-t border-zinc-800 p-4"
       >
-        <div className="container flex gap-4 items-end">
+        <div className="container max-w-4xl flex gap-4 items-end">
           <IconButton
             type="button"
             variant="ghost"
-            className="shrink-0"
+            className="shrink-0 text-zinc-400 hover:text-zinc-300"
             aria-label="Attach file"
           >
             <Paperclip className="h-5 w-5" />
@@ -68,9 +68,9 @@ const ChatInput = forwardRef<HTMLTextAreaElement, ChatInputProps>(
               placeholder="Message Agent1..."
               rows={1}
               className={cn(
-                "w-full resize-none bg-transparent p-3 focus:outline-none",
-                "rounded-lg border border-border/40",
-                "placeholder:text-muted-foreground",
+                "w-full resize-none bg-zinc-800/50 p-3 focus:outline-none",
+                "rounded-lg border border-zinc-700",
+                "placeholder:text-zinc-500 text-zinc-100",
                 disabled && "opacity-50"
               )}
               style={{ maxHeight: "200px" }}
@@ -79,7 +79,12 @@ const ChatInput = forwardRef<HTMLTextAreaElement, ChatInputProps>(
           </div>
           <IconButton
             type="submit"
-            className="shrink-0"
+            className={cn(
+              "shrink-0",
+              !message.trim() || disabled
+                ? "text-zinc-600 bg-zinc-800/50"
+                : "bg-blue-600 hover:bg-blue-500 text-white"
+            )}
             disabled={!message.trim() || disabled}
             aria-label="Send message"
           >
